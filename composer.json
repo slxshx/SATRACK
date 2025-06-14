@@ -1,0 +1,17 @@
+{
+    "name": "leon-l/satrack",
+    "require": {
+        "composer/composer": "^2.8"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        }
+    },
+    "authors": [
+        {
+            "name": "slxshx",
+            "email": "leon.linss@outlook.de"
+        }
+    ]
+}
