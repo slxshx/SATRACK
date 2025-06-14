@@ -1,24 +1,39 @@
 # SATRACK
 
-SATRACK ist ein schlankes MVC-Projekt in PHP, das externe API-Daten zu Satellitenanfragen verarbeitet, speichert und übersichtlich darstellt. Ziel ist es, API-Requests nachvollziehbar zu machen, die Ergebnisse in einer Datenbank zu persistieren und dem Nutzer eine einfache Möglichkeit zur Verwaltung und Einsicht zu geben.
+SATRACK ist ein flexibles PHP-MVC-Projekt zur Erfassung, Speicherung und Anzeige von Satelliten-bezogenen API-Daten. Es bietet eine saubere Architektur, die sich leicht erweitern lässt – etwa für eigene Analyse-Tools, Nutzerbereiche oder Visualisierungen. Ziel ist es, API-Daten strukturiert zu verwalten und nutzbar zu machen.
 
-## Features
+## Features (mit Beispielen)
 
-- Empfang und Speicherung externer API-Requests
-- Anbindung an eine relationale Datenbank (MySQL)
-- Zentrale Modellstruktur mit einer vererbbaren Model-Basis (CRUD)
-- Nutzung des MVC-Prinzips zur klaren Trennung von Logik, Darstellung und Daten
-- Automatischer Datenbankzugriff über PDO Singleton
-- Erweiterbares System mit Fokus auf Skalierbarkeit und sauberen Code
+- **Empfang und Speicherung von API-Requests**
+  - Beispiel: Ein Request fragt die Position der ISS ab – SATRACK speichert Uhrzeit, Position und Nutzereingaben automatisch in der Datenbank.
+
+- **Flexible Datenbankanbindung via PDO-Singleton**
+  - Beispiel: Egal ob Satellitendaten, Nutzerinfos oder Logs – alle Tabellen können über zentrale Model-Logik angesprochen werden.
+
+- **Zentrale CRUD-Modelklasse**
+  - Beispiel: Ein neues Model für „Missionslogs“ benötigt nur den Tabellennamen – Methoden wie `create($data)` oder `find($id)` sind sofort nutzbar.
+
+- **Modularer MVC-Aufbau**
+  - Beispiel: Du möchtest ein Dashboard anzeigen, das die letzten 10 API-Requests grafisch darstellt? Controller holt die Daten, View rendert das Ergebnis, Model bleibt unabhängig.
+
+- **Skalierbarkeit durch klare Trennung von Logik**
+  - Beispiel: Später können eigene REST-Endpunkte geschaffen werden – z. B. `/api/track?lat=...&lon=...` – die exakt auf dein Datenmodell zugreifen.
+
+- **(Zukünftig) Nutzer-Auth & Logging**
+  - Beispiel: Jeder Nutzer könnte eigene Track-Requests senden und einsehen. Admins sehen, wie viele Anfragen welcher Nutzer in welchem Zeitraum getätigt hat.
+
+- **Fehlerhandling und Exceptions durch zentralisierte PDO-Verwaltung**
+  - Beispiel: Wenn ein API-Request scheitert (z. B. Timeout), wird dies sauber geloggt – inklusive Fehlermeldung und Request-Details.
 
 ## Verwendete Technologien
 
-- **PHP** (OOP, PDO, Anonymous Functions)
-- **MySQL** für die Datenhaltung
-- **Composer** (geplant oder optional für Autoloading)
-- **.env-Konfiguration** über `$_ENV` Variablen
-- **Modularer Aufbau** nach MVC-Struktur (Model, View, Controller)
+- **PHP** (mit Fokus auf OOP & saubere Klassenstrukturen)
+- **MySQL** für persistente Speicherung
+- **PDO** für sicheren Datenbankzugriff
+- **MVC-Struktur** für klare Verantwortlichkeiten
+- **.env-Datei** zur Konfiguration sensibler Daten
 
 ---
 
-> Weitere Details zur Einrichtung und Nutzung folgen in einer späteren Version.
+> ⚙️ Setup-Anleitung folgt bald!  
+> 📡 Später geplant: REST-API, User Interface, Logging-Dashboard, Geo-Kartendarstellung.
