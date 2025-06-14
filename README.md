@@ -2,7 +2,7 @@
 
 SATRACK ist ein flexibles PHP-MVC-Projekt zur Erfassung, Speicherung und Anzeige von Satelliten-bezogenen API-Daten. Es bietet eine saubere Architektur, die sich leicht erweitern lässt – etwa für eigene Analyse-Tools, Nutzerbereiche oder Visualisierungen. Ziel ist es, API-Daten strukturiert zu verwalten und nutzbar zu machen.
 
-## Features (mit Beispielen)
+## Features 
 
 - **Empfang und Speicherung von API-Requests**
   - Beispiel: Ein Request fragt die Position der ISS ab – SATRACK speichert Uhrzeit, Position und Nutzereingaben automatisch in der Datenbank.
