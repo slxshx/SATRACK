@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Core\Model;
+use DateTimeImmutable;
 
 class ApiRequest extends Model
 {
@@ -11,18 +12,18 @@ class ApiRequest extends Model
     protected string $table;
 
     //Propertys
-    private $id;
-    private $satellite_id;
-    private $user_id;
-    private $latitude;
-    private $longitude;
-    private $altitude_km;
-    private $velocity_kmh;
-    private $timestamp;
-    private $raw_response;
-    private $created_at;
+    private int $id;
+    private int $satellite_id;
+    private int $user_id;
+    private float $latitude;
+    private float $longitude;
+    private float $altitude_km;
+    private float $velocity_kmh;
+    private int $timestamp;
+    private string $raw_response;
+    private DateTimeImmutable $created_at;
 
-    protected function __construct(array $data = [])
+    public function __construct(array $data = [])
     {
         $this->table = $_ENV['DB_TABLE_API'] ?? 'api_requests';
         parent::__construct();
@@ -37,7 +38,6 @@ class ApiRequest extends Model
     public function toArray(): array
     {
         return [
-            'id' => $this->id,
             'satellite_id' => $this->satellite_id,
             'user_id' => $this->user_id,
             'latitude' => $this->latitude,
@@ -46,7 +46,7 @@ class ApiRequest extends Model
             'velocity_kmh' => $this->velocity_kmh,
             'timestamp' => $this->timestamp,
             'raw_response' => $this->raw_response,
-            'created_at' => $this->created_at
+            'created_at' => $this->created_at->format('Y.m.d H:i:s')
         ];
     }
 
@@ -150,6 +150,12 @@ class ApiRequest extends Model
 
     public function setCreatedAt($createdAt)
     {
-        $this->created_at = $createdAt;
+        if ($createdAt instanceof DateTimeImmutable) {
+            $this->created_at = $createdAt;
+        } elseif (is_string($createdAt)) {
+            $this->created_at = new DateTimeImmutable($createdAt);
+        } else {
+            throw new \InvalidArgumentException('createdAt must be a DateTimeImmutable or date string');
+        }
     }
 }
