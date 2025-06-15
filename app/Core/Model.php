@@ -24,8 +24,11 @@ class Model
     public function all()
     {
         try {
-            // Achtung: ohne JOINs – produziert Cross Join (evtl. später JOINs einbauen)
-            $sql = "SELECT * FROM api_requests, satellites, users";
+            // Gibt Daten aller Tabellen zurück
+            $sql = "SELECT ar.*, s.name AS satellite_name, u.username AS user_name
+            FROM api_requests ar
+            LEFT JOIN satellites s ON ar.satellite_id = s.id
+            LEFT JOIN users u ON ar.user_id = u.id";
             $stmt = $this->db->prepare($sql);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
