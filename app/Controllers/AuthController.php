@@ -168,7 +168,6 @@ class AuthController
 
             // Anlegen eines neuen NutzerObjekts und speichern in die Datenbank
             $addedUser = new User($data);
-            error_log('Versuche Nutzer zu speichern...');
 
             $userId = $addedUser->create($data);
 
