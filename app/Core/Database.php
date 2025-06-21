@@ -2,6 +2,7 @@
 
 namespace App\Core;
 
+use Dotenv\Dotenv;
 use PDO;
 use PDOException;
 

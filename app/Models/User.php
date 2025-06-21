@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Core\Database;
 use App\Core\Model;
 use DateTimeImmutable;
 use PDO;
@@ -10,7 +11,6 @@ class User extends Model
 {
 
     protected string $table;
-    protected $db;
 
     private int $id;
     private string $username;
@@ -21,11 +21,15 @@ class User extends Model
     public function __construct($data)
     {
         $this->table = $_ENV['DB_TABLE_U'] ?? 'users';
-        Parent::__construct();
+        parent::__construct();
 
         foreach ($data as $key => $value) {
             if (property_exists($this, $key)) {
-                $data->$key = $value;
+                if ($key === 'created_at' && is_string($value)) {
+                    $this->created_at = new DateTimeImmutable($value);
+                } else {
+                    $this->$key = $value;
+                }
             }
         }
     }
@@ -43,9 +47,8 @@ class User extends Model
     public static function findByEmail($email): ?self
     {
         $table = $_ENV['DB_TABLE_U'] ?? 'users';
-        Parent::__construct();
-
-        $stmt = self::$db->prepare("SELECT * FROM {$table} WHERE email = :email LIMIT 1");
+        $db = Database::getInstance();
+        $stmt = $db->prepare("SELECT * FROM {$table} WHERE email = :email LIMIT 1");
         $stmt->execute([':email' => $email]);
         $data = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -60,9 +63,8 @@ class User extends Model
     public static function findByUsername($username): ?self
     {
         $table = $_ENV['DB_TABLE_U'] ?? 'users';
-        Parent::__construct();
-
-        $stmt = self::$db->prepare("SELECT * FROM {$table} WHERE username = :username LIMIT 1");
+        $db = Database::getInstance();
+        $stmt = $db->prepare("SELECT * FROM {$table} WHERE username = :username LIMIT 1");
         $stmt->execute([':username' => $username]);
         $data = $stmt->fetch(PDO::FETCH_ASSOC);
 

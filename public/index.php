@@ -5,7 +5,12 @@ use App\Core\Router;
 use App\Controllers\AuthController;
 use App\Controllers\LogoutController;
 
+
 require __DIR__ . '/../vendor/autoload.php';
+
+$dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__));
+$dotenv->load();
+
 $config = require __DIR__ . '/../config/app.php';
 date_default_timezone_set($config['timezone']);
 
