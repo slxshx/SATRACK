@@ -57,6 +57,23 @@ class User extends Model
         return $user;
     }
 
+    public static function findByUsername($username): ?self
+    {
+        $table = $_ENV['DB_TABLE_U'] ?? 'users';
+        Parent::__construct();
+
+        $stmt = self::$db->prepare("SELECT * FROM {$table} WHERE username = :username LIMIT 1");
+        $stmt->execute([':username' => $username]);
+        $data = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (!$data) {
+            return null;
+        }
+
+        $user = new self($data);
+        return $user;
+    }
+
     // Verify Password
 
     public function verifyPassword(string $password): bool

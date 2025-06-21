@@ -82,7 +82,7 @@ class Model
             $stmt->execute($data);
 
             // Gibt zurück, wie viele Zeilen eingefügt wurden
-            return $stmt->rowCount();
+            return $this->db->lastInsertId();
         } catch (PDOException $e) {
             throw new \RuntimeException('Fehler beim einfügen der Daten.', 0, $e);
         }
