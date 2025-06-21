@@ -193,5 +193,11 @@ class AuthController
         }
     }
 
-    public function logout() {}
+    public function logout()
+    {
+        session_unset();
+        session_destroy();
+        header('Location: /login');
+        exit;
+    }
 }
