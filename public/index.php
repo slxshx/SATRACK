@@ -3,6 +3,7 @@
 
 use App\Core\Router;
 use App\Controllers\AuthController;
+use App\Controllers\LogoutController;
 
 require __DIR__ . '/../vendor/autoload.php';
 $config = require __DIR__ . '/../config/app.php';
@@ -19,5 +20,7 @@ $router->post('/login', [AuthController::class, 'handleLogin']);
 
 $router->get('/register', [AuthController::class, 'showRegister']);
 $router->post('/register', [AuthController::class, 'register']);
+
+$router->get('/logout', [LogoutController::class, 'logout']);
 
 $router->dispatch();
