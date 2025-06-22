@@ -1,6 +1,7 @@
 <?php
 // Autoloading einbauen
 
+use App\Controllers\ApiRequestController;
 use App\Core\Router;
 use App\Controllers\AuthController;
 use App\Controllers\LogoutController;
@@ -27,5 +28,8 @@ $router->get('/register', [AuthController::class, 'showRegister']);
 $router->post('/register', [AuthController::class, 'register']);
 
 $router->get('/logout', [LogoutController::class, 'logout']);
+
+$router->get('/api/satellite/{id}', [ApiRequestController::class, 'fetchSatelliteData']);
+
 
 $router->dispatch();

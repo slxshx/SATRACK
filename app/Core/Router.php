@@ -19,9 +19,7 @@ class Router
 
     public function dispatch(): void
     {
-        // Speichern ob Post oder Get
         $method = $_SERVER['REQUEST_METHOD'];
-        // Url speichern
         $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
         // Normalisieren der URI
@@ -30,22 +28,56 @@ class Router
             $uri = '/';
         }
 
-        // Wenn post, dann nehme post array sonst get array
         $routes = $method === 'POST' ? $this->postRoutes : $this->getRoutes;
 
-        if (!isset($routes[$uri])) {
-            http_response_code(404);
-            echo '404 - Seite nicht gefunden.';
-            return;
+        $params = [];
+
+        // Versuchen, die Route mit einer Regex zu matchen
+        foreach ($routes as $path => $handler) {
+            // Wenn die Route Platzhalter enthält
+            if (strpos($path, '{') !== false) {
+                // Compile die Route (erstellt Regex)
+                $compiled = $this->compileRouting($path);
+
+                if (preg_match($compiled['pattern'], $uri, $matches)) {
+                    // Parameter extrahieren
+                    foreach ($compiled['paramNames'] as $index => $name) {
+                        $params[$name] = $matches[$index + 1];
+                    }
+                    // Handler ausführen
+                    [$class, $method] = $handler;
+                    (new $class())->$method($params);
+                    return;
+                }
+            } elseif ($path === $uri) {
+                // Wenn die Route exakt übereinstimmt
+                [$class, $method] = $handler;
+                (new $class())->$method();
+                return;
+            }
         }
 
-        [$class, $method] = $routes[$uri];
+        // Wenn keine Route gefunden wurde
+        http_response_code(404);
+        echo '404 - Seite nicht gefunden.';
+    }
 
-        if (!class_exists($class) || !method_exists($class, $method)) {
-            echo '500 - Serverfehler: Ungültiger Handler';
-            return;
-        }
+    private function compileRouting(string $path): array
+    {
+        $paramNames = [];
 
-        (new $class)->$method();
+        // Ersetze Platzhalter wie {id} durch eine RegEx-Gruppe
+        $pattern = preg_replace_callback('/\{(\w+)\}/', function ($matches) use (&$paramNames) {
+            $paramNames[] = $matches[1];       // z. B. "id"
+            return '(\w+)';                     // Platzhalter für alphanumerische Werte
+        }, $path);
+
+        // Um den ganzen Ausdruck herum ein RegEx bauen
+        $pattern = '#^' . $pattern . '$#';
+
+        return [
+            'pattern' => $pattern,
+            'paramNames' => $paramNames
+        ];
     }
 }
