@@ -11,7 +11,7 @@ class ApiRequestController
         // API-URL basierend auf der Satellite ID dynamisch anpassen
         $apiName = 'http://api.open-notify.org/iss-now.json';  // ISS URL
         if ($satelliteId !== 'iss') {
-            // Hier kannst du mit der 'id' die richtige URL für andere Satelliten aufbauen
+            // Hier mit der 'id' die richtige URL für andere Satelliten aufbauen
             $apiName = "https://example.com/satellite/$satelliteId"; // Beispiel für andere Satelliten
         }
 
