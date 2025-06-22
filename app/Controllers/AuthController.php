@@ -69,9 +69,6 @@ class AuthController
             header('Location: /dashboard');
             exit;
         } catch (Exception $e) {
-
-            error_log($e->getMessage());  // Loggt die Fehlermeldung in die PHP-Fehlerprotokolle
-            error_log($e->getTraceAsString());
             // Allgemeiner Fehler
             $_SESSION['loginError'] = 'Es ist ein Fehler beim Login aufgetreten.';
             header('Location: /login');
