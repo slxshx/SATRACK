@@ -23,6 +23,13 @@ class Router
         $method = $_SERVER['REQUEST_METHOD'];
         // Url speichern
         $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+
+        // Normalisieren der URI
+        $uri = rtrim($uri, '/');
+        if ($uri === '') {
+            $uri = '/';
+        }
+
         // Wenn post, dann nehme post array sonst get array
         $routes = $method === 'POST' ? $this->postRoutes : $this->getRoutes;
 

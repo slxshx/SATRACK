@@ -14,6 +14,9 @@ $dotenv->load();
 $config = require __DIR__ . '/../config/app.php';
 date_default_timezone_set($config['timezone']);
 
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 // Session starten
 session_start();
 

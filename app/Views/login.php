@@ -23,7 +23,7 @@ function flash(string $key): ?string
 <body>
 
     <!-- Flash‑Fehler ausgeben -->
-    <?php foreach (['loginError', 'loginDataIsMissing', 'invalidEmail'] as $flashKey): ?>
+    <?php foreach (['loginError', 'loginDataIsMissing', 'invalidEmail', 'RegisterSucceeded'] as $flashKey): ?>
         <?php if ($msg = flash($flashKey)): ?>
             <div class="flash-error"><?= htmlspecialchars($msg) ?></div>
         <?php endif; ?>
@@ -37,7 +37,7 @@ function flash(string $key): ?string
 
             <div class="input--field">
                 <label for="email">E‑Mail:</label>
-                <input type="text" name="email" placeholder="example@outlook.de" required>
+                <input type="text" name="email" placeholder="example@outlook.de" required value="<?= $_SESSION['old_email'] ?? '' ?>">
 
                 <label for="password">Passwort:</label>
                 <input type="password" name="password" placeholder="••••••••" required>

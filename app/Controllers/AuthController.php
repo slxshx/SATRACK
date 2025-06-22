@@ -17,17 +17,20 @@ class AuthController
     public function handleLogin()
     {
         try {
+            //Session clearen
+            session_unset();
+
             // Nur POST-Anfragen akzeptieren
             if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-                $this->showLogin();
-                return;
+                header('Location: /login');
+                exit;
             }
 
             // Eingaben prüfen
             if (empty($_POST['email']) || empty($_POST['password'])) {
                 $_SESSION['loginDataIsMissing'] = 'Bitte gebe deine Anmeldedaten ein.';
-                $this->showLogin();
-                return;
+                header('Location: /login');
+                exit;
             }
 
             // Eingaben säubern
@@ -37,8 +40,8 @@ class AuthController
             // E-Mail-Format prüfen
             if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                 $_SESSION['invalidEmail'] = 'Ungültiges E-Mail-Format.';
-                $this->showLogin();
-                return;
+                header('Location: /login');
+                exit;
             }
 
             // Nutzer anhand der E-Mail aus der Datenbank laden
@@ -47,15 +50,15 @@ class AuthController
             // Wenn Nutzer nicht gefunden
             if (!$user) {
                 $_SESSION['loginError'] = 'Dieser Benutzer existiert nicht.';
-                $this->showLogin();
-                return;
+                header('Location: /login');
+                exit;
             }
 
             // Passwort überprüfen
             if (!$user->verifyPassword($password)) {
                 $_SESSION['loginError'] = 'Das eingegebene Passwort ist falsch.';
-                $this->showLogin();
-                return;
+                header('Location: /login');
+                exit;
             }
 
             // Login erfolgreich → Nutzer-ID in die Session speichern
@@ -66,9 +69,13 @@ class AuthController
             header('Location: /dashboard');
             exit;
         } catch (Exception $e) {
+
+            error_log($e->getMessage());  // Loggt die Fehlermeldung in die PHP-Fehlerprotokolle
+            error_log($e->getTraceAsString());
             // Allgemeiner Fehler
             $_SESSION['loginError'] = 'Es ist ein Fehler beim Login aufgetreten.';
-            $this->showLogin();
+            header('Location: /login');
+            exit;
         }
     }
 
@@ -85,15 +92,15 @@ class AuthController
         try {
             // Wenn nicht POST dann wahrscheinlich GET und dabei soll nur die Seite mit leerem Formular angezeigt werden
             if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-                $this->showRegister();
-                return;
+                header('Location: /register');
+                exit;
             }
 
             // Erste Validierung zum Check ob in den Feldern überhaupt etwas drinnen steht UND ob Password und verifyPassword den gleichen Inhalt haben
             if (empty($_POST['username']) || empty($_POST['email']) || empty($_POST['password']) || empty($_POST['verifyPassword'])) {
                 $_SESSION['RegisterDataIsMissing'] = 'Bitte fülle alle Felder aus.';
-                $this->showRegister();
-                return;
+                header('Location: /register');
+                exit;
             }
 
 
@@ -114,8 +121,8 @@ class AuthController
                 $_SESSION['old_username'] = $username;
                 $_SESSION['old_email'] = $email;
 
-                $this->showRegister();
-                return;
+                header('Location: /register');
+                exit;
             }
 
             // Checken ob die Email bereits registriert ist: 
@@ -125,16 +132,16 @@ class AuthController
             if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                 $_SESSION['invalidEmail'] = 'Ungültiges E-Mail-Format.';
                 $_SESSION['old_username'] = $username;
-                $this->showRegister();
-                return;
+                header('Location: /register');
+                exit;
             }
 
             // Wenn E-Mail korrekt ist, Überprüfung ob bereits ein User mit dieser E-Mail existiert
             if ($userByEmail) {
                 $_SESSION['RegisterEmailAlreadyExists'] = 'Diese E-Mail wird bereits verwendet.';
                 $_SESSION['old_username'] = $username;
-                $this->showRegister();
-                return;
+                header('Location: /register');
+                exit;
             }
 
             // Passwortlänge checken
@@ -142,8 +149,8 @@ class AuthController
                 $_SESSION['RegisterPasswordTooShort'] = 'Das eingegebene Passwort ist zu kurz.';
                 $_SESSION['old_username'] = $username;
                 $_SESSION['old_email'] = $email;
-                $this->showRegister();
-                return;
+                header('Location: /register');
+                exit;
             }
 
             // Checken ob Password und verifyPassword identisch sind
@@ -151,8 +158,8 @@ class AuthController
                 $_SESSION['RegisterPasswordsNotIdentical'] = 'Deine Passwörter stimmen nicht überein.';
                 $_SESSION['old_username'] = $username;
                 $_SESSION['old_email'] = $email;
-                $this->showRegister();
-                return;
+                header('Location: /register');
+                exit;
             }
 
             // Password hashen
@@ -174,8 +181,8 @@ class AuthController
             //Überprüfung ob speichern erfolgreich war
             if (!$userId) {
                 $_SESSION['ErrorAddingUserToDB'] =  'Fehler beim speichern des neuen Kontos. Bitte probiere es erneut.';
-                $this->showRegister();
-                return;
+                header('Location: /register');
+                exit;
             }
 
             // Registrierung erfolgreich → Nutzer-ID in die Session speichern
@@ -189,8 +196,8 @@ class AuthController
         } catch (Exception $e) {
             // Allgemeiner Fehler
             $_SESSION['RegisterError'] = 'Es ist ein Fehler bei der Registrierung aufgetreten.';
-            $this->showRegister();
-            return;
+            header('Location: /register');
+            exit;
         }
     }
 }

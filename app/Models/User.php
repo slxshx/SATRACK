@@ -6,6 +6,7 @@ use App\Core\Database;
 use App\Core\Model;
 use DateTimeImmutable;
 use PDO;
+use Exception;
 
 class User extends Model
 {
@@ -15,7 +16,7 @@ class User extends Model
     private int $id;
     private string $username;
     private string $email;
-    private string $password_hash;
+    private string $password;
     private DateTimeImmutable $created_at;
 
     public function __construct($data)
@@ -57,6 +58,11 @@ class User extends Model
         }
 
         $user = new self($data);
+
+        // Sicherstellen, dass $data['password_hash'] gesetzt ist
+        if (!isset($user->password)) {
+            throw new Exception('Password hash ist nicht gesetzt.');
+        }
         return $user;
     }
 
@@ -73,6 +79,11 @@ class User extends Model
         }
 
         $user = new self($data);
+
+        // Sicherstellen, dass $data['password_hash'] gesetzt ist
+        if (!isset($user->password)) {
+            throw new Exception('Password hash ist nicht gesetzt.');
+        }
         return $user;
     }
 
@@ -80,8 +91,13 @@ class User extends Model
 
     public function verifyPassword(string $password): bool
     {
-        return password_verify($password, $this->password_hash);
+        if (empty($this->password)) {
+            throw new Exception('Password hash is empty.');
+        }
+
+        return password_verify($password, $this->password);
     }
+
 
     //Getter 
 
@@ -97,7 +113,7 @@ class User extends Model
 
     public function getHashedPassword()
     {
-        return $this->password_hash;
+        return $this->password;
     }
 
     public function getEmail()
@@ -123,7 +139,7 @@ class User extends Model
 
     public function setPassword($password)
     {
-        $this->password_hash = password_hash($password, PASSWORD_DEFAULT);
+        $this->password = password_hash($password, PASSWORD_DEFAULT);
     }
 
     public function setCreatedAt($createdAt)
