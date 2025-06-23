@@ -30,7 +30,11 @@ class ApiRequest extends Model
 
         foreach ($data as $key => $value) {
             if (property_exists($this, $key)) {
-                $this->$key = $value;
+                if ($key === 'created_at' && is_string($value)) {
+                    $this->created_at = new DateTimeImmutable($value);
+                } else {
+                    $this->$key = $value;
+                }
             }
         }
     }

@@ -4,6 +4,9 @@ namespace App\Models;
 
 use App\Core\Model;
 use DateTimeImmutable;
+use App\Core\Database;
+use PDO;
+use PDOException;
 
 class Satellite extends Model
 {
@@ -21,10 +24,16 @@ class Satellite extends Model
 
         foreach ($data as $key => $value) {
             if (property_exists($this, $key)) {
-                $this->$key = $value;
+                // Wenn 'created_at' ein String ist, dann in DateTimeImmutable umwandeln
+                if ($key === 'created_at' && is_string($value)) {
+                    $this->$key = new DateTimeImmutable($value);
+                } else {
+                    $this->$key = $value;
+                }
             }
         }
     }
+
 
     public function toArray(): array
     {
@@ -33,6 +42,21 @@ class Satellite extends Model
             'norad_id' => $this->norad_id,
             'created_at' => $this->created_at->format('Y.m.d H:i:s')
         ];
+    }
+
+    public static function  findByName(string $name)
+    {
+        $table = $_ENV['DB_TABLE_SAT'] ?? 'satellites';
+        $db = Database::getInstance();
+        $stmt = $db->prepare("SELECT * FROM {$table} WHERE name = :name LIMIT 1");
+        $stmt->execute([':name' => $name]);
+        $data = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (!$data) {
+            return null;
+        }
+
+        return $satellite = new self($data);
     }
 
     // Getter

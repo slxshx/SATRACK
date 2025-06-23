@@ -81,7 +81,7 @@ class Model
             // Direktes Übergabe der Daten an execute() (PDO nutzt die Platzhalter)
             $stmt->execute($data);
 
-            // Gibt zurück, wie viele Zeilen eingefügt wurden
+            // Gibt zurück, letzte id
             return $this->db->lastInsertId();
         } catch (PDOException $e) {
             throw new \RuntimeException('Fehler beim einfügen der Daten.', 0, $e);
