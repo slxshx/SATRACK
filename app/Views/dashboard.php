@@ -8,7 +8,6 @@
 </head>
 <header>
     <div class="header--logo">
-
     </div>
     <div class="navbar">
         <div class="navbar--entry">
