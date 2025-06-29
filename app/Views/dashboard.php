@@ -7,20 +7,35 @@
     <link rel="stylesheet" href="/css/dashboard.css">
     <title>SATRACK Dashboard</title>
 </head>
-<header>
-    <div class="header--logo">
-    </div>
-    <div class="navbar">
-        <div class="navbar--entry">
-
-        </div>
-    </div>
-    <div class="searchbar">
-
-    </div>
-</header>
 
 <body>
+    <header>
+        <div class="header--logo">
+            <a href="/dashboard">
+                <h1>SATRACK</h1>
+            </a>
+        </div>
+        <div class="navbar">
+            <a class="navbar--entry" href="/dashboard">Dashboard</a>
+            <a class="navbar--entry" href="/satellites">Satelliten</a>
+            <a class="navbar--entry" href="/settings">Einstellungen</a>
+            <a class="navbar--entry" href="/help">Hilfe</a>
+            <div class="dropdown">
+                <button onclick="kontoDropdown()" class="dropbtn">Konto</button>
+                <div id="kontoDropdown" class="dropdown-content">
+                    <a href="#">Account</a>
+                    <a href="/logout">Logout</a>
+                </div>
+            </div>
+        </div>
+        </div>
+        <form action="search" method="POST">
+            <div class="searchbar">
+                <label for="searchbar">Suchleiste</label>
+                <input type="search" name="searchbar" placeholder="Suche..">
+            </div>
+        </form>
+    </header>
     <div class="sidebar">
         <div class="sidebar--features">
 

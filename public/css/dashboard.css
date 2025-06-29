@@ -1,0 +1,106 @@
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #181d23;
+    color: #eee;
+}
+
+/* Header fixen */
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.5rem 2rem;
+    background: #10131a;
+    box-shadow: 0 2px 12px #0002;
+}
+
+.header--logo h1 {
+    color: #7fc7ff;
+    margin: 0;
+    letter-spacing: 2px;
+}
+
+.navbar {
+    display: flex;
+    gap: 2rem;
+}
+
+.navbar--entry {
+    color: #7fc7ff;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 500;
+    margin: 0 0.6rem;
+    transition: color 0.2s;
+}
+
+.navbar--entry:hover, .navbar--entry:focus {
+    color: #fff;
+    text-shadow: 0 0 5px #7fc7ff44;
+}
+
+.navbar--entry:active {
+    color: #55acee;
+}
+
+/* Entfernt lila/blau für visited/unvisited */
+.navbar--entry:visited {
+    color: #7fc7ff;
+}
+
+/* Konto-Dropdown */
+.dropbtn {
+    background: #262c38;
+    color: #9ee6ff;
+    padding: 6px 18px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background .2s;
+}
+.dropbtn:hover {
+    background: #23304c;
+}
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background: #181d23;
+    min-width: 110px;
+    box-shadow: 0 8px 16px 0 #0006;
+    border-radius: 8px;
+    z-index: 1;
+}
+.dropdown-content a {
+    color: #7fc7ff;
+    padding: 10px 14px;
+    text-decoration: none;
+    display: block;
+    font-size: .95rem;
+    border-radius: 6px;
+    transition: background .2s;
+}
+.dropdown-content a:hover {
+    background: #22283a;
+    color: #fff;
+}
+.show { display: block; }
+
+/* Suchleiste */
+.searchbar {
+    margin-left: 1.5rem;
+}
+.searchbar input[type="search"] {
+    padding: 6px 14px;
+    border-radius: 6px;
+    border: none;
+    background: #22283a;
+    color: #9ee6ff;
+    font-size: .97rem;
+}
+.searchbar input[type="search"]:focus {
+    outline: none;
+    background: #1b222e;
+    color: #fff;
+}
