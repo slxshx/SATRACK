@@ -14,16 +14,29 @@ header {
     background: #10131a;
     box-shadow: 0 2px 12px #0002;
 }
+.header--logo {
+    flex:1;
+}
 
 .header--logo h1 {
     color: #7fc7ff;
     margin: 0;
     letter-spacing: 2px;
+    text-shadow: 0 3px 16px #55acee33, 0 1px 0 #333;
+    font-size: 2.2rem;
+}
+
+
+.header--logo a {
+    text-decoration: none;
 }
 
 .navbar {
+    flex: 4;
     display: flex;
-    gap: 2rem;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
 }
 
 .navbar--entry {
@@ -89,7 +102,10 @@ header {
 
 /* Suchleiste */
 .searchbar {
-    margin-left: 1.5rem;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
 }
 .searchbar input[type="search"] {
     padding: 6px 14px;
@@ -104,3 +120,10 @@ header {
     background: #1b222e;
     color: #fff;
 }
+
+.searchbar label {
+    color: #b6c8e1;
+    margin-right: 0.5rem;
+    font-size: 0.97rem;
+}
+
