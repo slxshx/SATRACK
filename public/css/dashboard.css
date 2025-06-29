@@ -32,7 +32,7 @@ header {
 }
 
 .navbar {
-    flex: 4;
+    flex: 8;
     display: flex;
     align-items: center;
     justify-content: center;
