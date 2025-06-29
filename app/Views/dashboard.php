@@ -36,11 +36,29 @@
             </div>
         </form>
     </header>
-    <div class="sidebar">
-        <div class="sidebar--features">
 
+    <aside class="sidebar">
+        <button class="sidebar-toggle" onclick="toggleSidebar()">≡</button>
+        <div class="sidebar-buttons">
+            <button data-tooltip="Satellit hinzufügen">
+                <span class="sidebar-icon">➕</span>
+                <span class="sidebar-label">Satellit hinzufügen</span>
+            </button>
+            <button data-tooltip="Alle Satelliten">
+                <span class="sidebar-icon">🛰️</span>
+                <span class="sidebar-label">Alle Satelliten</span>
+            </button>
+            <button data-tooltip="Einstellungen">
+                <span class="sidebar-icon">⚙️</span>
+                <span class="sidebar-label">Einstellungen</span>
+            </button>
+            <button data-tooltip="Sync">
+                <span class="sidebar-icon">🔄</span>
+                <span class="sidebar-label">Sync</span>
+            </button>
         </div>
-    </div>
+    </aside>
+
     <div class="dashboard--wrapper">
         <div class="dashboard--box">
             <div class="dashboard--content">

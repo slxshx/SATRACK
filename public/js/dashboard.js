@@ -16,3 +16,7 @@ window.onclick = function(event) {
         }
     }
 }
+
+function toggleSidebar() {
+    document.querySelector('.sidebar').classList.toggle('collapsed');
+}
