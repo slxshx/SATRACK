@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,6 +19,7 @@
 
     </div>
 </header>
+
 <body>
     <div class="sidebar">
         <div class="sidebar--features">
@@ -33,6 +35,7 @@
             </div>
         </div>
     </div>
+    <script src="/js/dashboard.js" defer></script>
 </body>
 <footer>
     <div class="footer--wrapper">
@@ -43,4 +46,5 @@
         </div>
     </div>
 </footer>
+
 </html>

@@ -5,6 +5,7 @@ use App\Controllers\ApiRequestController;
 use App\Core\Router;
 use App\Controllers\AuthController;
 use App\Controllers\LogoutController;
+use App\Controllers\DashboardController;
 
 
 require __DIR__ . '/../vendor/autoload.php';
@@ -28,6 +29,8 @@ $router->get('/register', [AuthController::class, 'showRegister']);
 $router->post('/register', [AuthController::class, 'register']);
 
 $router->get('/logout', [LogoutController::class, 'logout']);
+
+$router->get('/dashboard',  [DashboardController::class, 'showDashboard']);
 
 $router->get('/api/satellite/{id}', [ApiRequestController::class, 'fetchSatelliteData']);
 

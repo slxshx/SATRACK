@@ -66,7 +66,7 @@ class AuthController
             $_SESSION['username'] = $user->getUsername();
 
             // Weiterleiten nach erfolgreichem Login
-            header('Location: /api/satellite/iss');
+            header('Location: /dashboard');
             exit;
         } catch (Exception $e) {
             // Allgemeiner Fehler
